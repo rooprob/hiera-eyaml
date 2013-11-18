@@ -22,17 +22,7 @@ class Hiera
 
           debug("Processing datasource: #{eyaml_file}")
 
-          if not @cache.nil?
-            data = @cache.read(eyaml_file, Hash, {}) do |data|
-              YAML.load(data)
-            end
-          else
-            data = YAML.load_file(eyaml_file)
-            unless data.is_a?(Hash)
-              debug("YAML wasn't a hash, #{data} so defaulting to Hash {}")
-              data = {}
-            end
-          end
+          data = YAML.load(File.read( eyaml_file ))
 
           next if data.nil? or data.empty?
           debug ("Data contains valid YAML")
